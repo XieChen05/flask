@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS codes (
+    code TEXT PRIMARY KEY,
+    used INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    username TEXT PRIMARY KEY,
+    password TEXT NOT NULL
+);

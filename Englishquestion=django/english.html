@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小语笔记 - 英语</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0; /* 浅色背景 */
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f9f9f9; /* 浅灰色背景 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            position: relative;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .toggle-icon {
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .navbar .menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 15px;
+        }
+
+        .navbar .menu a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .login-btn, .register-btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn {
+            background-color: #333;
+        }
+
+        .register-btn {
+            background-color: #333;
+        }
+
+        /* 背景图片区域 */
+        .background-section {
+            position: relative;
+            overflow: hidden;
+            height: 300px; /* 调整背景图片区域的高度 */
+            transition: transform 0.3s; /* 添加背景图片的动态效果 */
+        }
+
+        .background-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片铺满整个区域 */
+        }
+
+        .background-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* 半透明遮罩 */
+            z-index: 1;
+        }
+
+        .background-section .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* 与背景形成对比，确保清晰可见 */
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .background-section:hover {
+            transform: scale(1.05); /* 鼠标悬停时背景图片放大 */
+        }
+
+        /* 卡片样式 */
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .card {
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s; /* 动态效果过渡 */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* 鼠标悬停时卡片放大 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影加深 */
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card .subtitle {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .card .desc {
+            font-size: 14px;
+        }
+
+        /* yanshen 区域样式 */
+        .yanshen {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .crad {
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s; /* 动态效果过渡 */
+        }
+
+        .crad:hover {
+            transform: scale(1.05); /* 鼠标悬停时卡片放大 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影加深 */
+        }
+
+        .crad img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .crad .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .crad .subtitle {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .crad .desc {
+            font-size: 14px;
+        }
+
+        /* 漂浮元素 */
+        .floating-element {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s; /* 动态效果过渡 */
+        }
+
+        .floating-element:hover {
+            transform: scale(1.1); /* 鼠标悬停时放大 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 鼠标悬停时阴影加深 */
+        }
+
+        .floating-element-icon {
+            transform: rotate(45deg);
+        }
+
+        .src {
+            width: 28px;
+            height: 28px;
+            
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 80%;
+            max-width: 400px;
+            animation: slideIn 0.3s;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-content button:hover {
+            background-color: #555;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">小语笔记 - 英语</div>
+        <ul class="menu">
+            <li><a href="/">首页</a></li>
+            <li><a href="/card/words.html">单词库</a></li>
+            <li><a href="/navpages/ai-helper.html">AI助手</a></li>
+            <li><a href="/navpages/ai-speaking.html">AI口语外</a></li>
+            <li><a href="#" id="feedback-link">意见反馈</a></li>
+            <li><a href="#" id="add-to-desktop-link">添加桌面</a></li>
+        </ul>
+    <!-- 反馈模态框 -->
+    <!-- 添加桌面弹窗 -->
+    <div class="modal" id="desktopModal">
+        <div class="modal-content" style="max-width:420px;width:96%;text-align:center;">
+            <span class="close" id="closeDesktopModal" style="float:right;font-size:28px;cursor:pointer;">&times;</span>
+            <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">感谢支持</div>
+            <div style="color:#888;margin-bottom:12px;">来自该应用</div>
+            <img src="/static/img/yy.png" alt="桌面预览" style="width:90%;max-width:320px;border-radius:8px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+            <div style="display:flex;justify-content:center;gap:24px;margin-top:8px;">
+                <button id="desktopInstallBtn" style="padding:6px 28px;border-radius:8px;background:#1769e0;color:#fff;border:none;font-size:1.08rem;">安装</button>
+                <button id="desktopCancelBtn" style="padding:6px 28px;border-radius:8px;background:#fff;color:#1769e0;border:1.5px solid #1769e0;font-size:1.08rem;">取消</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="feedbackModal">
+        <div class="modal-content" style="max-width:600px;width:90%;">
+            <span class="close" id="closeFeedback">&times;</span>
+            <h2>意见反馈</h2>
+            <div style="color:#666;margin-bottom:12px;">如果你发现网站有BUG或者有任何更好的想法，欢迎留言哦~</div>
+            <textarea id="feedbackText" style="width:100%;height:120px;resize:vertical;padding:8px;border-radius:6px;border:1px solid #ccc;font-size:15px;box-sizing:border-box;" placeholder="请输入你的宝贵建议"></textarea>
+            <div style="text-align:right;margin-top:16px;">
+                <button id="submitFeedback" style="padding:6px 18px;border-radius:5px;background:#333;color:#fff;border:none;font-size:15px;">提交</button>
+            </div>
+        </div>
+    </div>
+    <!-- 导航栏 -->
+        <div class="nav-buttons">
+            <button class="button login-btn">登录</button>
+            <button class="button register-btn">注册</button>
+        </div>
+        <div class="user-info" style="display:none;align-items:center;gap:8px;">
+            <div class="avatar" style="width:32px;height:32px;border-radius:50%;background:#eee;display:inline-block;"></div>
+            <span class="username"></span>
+        </div>
+    </nav>
+
+    <!-- 背景图片区域 -->
+    <section class="background-section">
+        <img src="/static/img/gqbj.jpg" alt="背景图片">
+        <div class="overlay"></div>
+        <div class="text">欢迎来到小语笔记 - 英语</div> <!-- 添加文字内容 -->
+    </section>
+
+    <!-- 主内容区域 -->
+    <div class="content-container">
+        <!-- 卡片式内容块 1：单词库 -->
+        <div class="card" onclick="location.href='/card/words.html'" style="cursor:pointer;">
+            <img src="/static/img/image.png" alt="单词库">
+            <div class="title">单词库</div>
+            <div class="subtitle">按主题划分的词汇库等</div>
+            <div class="desc">主要内容介绍...</div>
+        </div>
+
+        <!-- 卡片式内容块 2：真题精听 -->
+        <div class="card" onclick="location.href='/card/listening.html'" style="cursor:pointer;">
+            <img src="/static/img/image.png" alt="真题精听">
+            <div class="title">真题精听</div>
+            <div class="subtitle">真题精听解析</div>
+            <div class="desc">主要内容介绍...</div>
+        </div>
+    </div>
+
+    <!-- yanshen 区域 -->
+    <div class="yanshen">
+        <!-- 卡片 1 -->
+        <div class="crad" onclick="location.href='/card/card1.html'" style="cursor:pointer;">
+            <img src="/static/img/image.png" alt="卡片1">
+            <div class="title">卡片 1 标题</div>
+            <div class="subtitle">卡片 1 副标题</div>
+            <div class="desc">卡片 1 的主要内容介绍...</div>
+        </div>
+
+        <!-- 卡片 2 -->
+        <div class="crad" onclick="location.href='/card/card2.html'" style="cursor:pointer;">
+            <img src="/static/img/image.png" alt="卡片2">
+            <div class="title">卡片 2 标题</div>
+            <div class="subtitle">卡片 2 副标题</div>
+            <div class="desc">卡片 2 的主要内容介绍...</div>
+        </div>
+    </div>
+
+    <!-- 漂浮元素 -->
+    <div class="floating-element">
+        <i class="floating-element-icon">⚠️</i>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>登录</h2>
+            <div class="form-group">
+                <label for="loginUsername">用户名</label>
+                <input type="text" id="loginUsername" name="username">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">密码</label>
+                <input type="password" id="loginPassword" name="password">
+            </div>
+            <div class="error-message" id="loginError"></div>
+            <button class="submit-btn" id="loginSubmit">登录</button>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>注册</h2>
+            <div class="form-group">
+                <label for="registerUsername">用户名</label>
+                <input type="text" id="registerUsername" name="username">
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">密码</label>
+                <input type="password" id="registerPassword" name="password">
+            </div>
+            <div class="form-group">
+                <label for="activationCode">激活码</label>
+                <input type="text" id="activationCode" name="activationCode">
+            </div>
+            <div class="error-message" id="registerError"></div>
+            <button class="submit-btn" id="registerSubmit">注册</button>
+        </div>
+    </div>
+
+    <script>
+    // 添加桌面弹窗与PWA安装
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+    $(function(){
+        $('#add-to-desktop-link').click(function(e){
+            e.preventDefault();
+            $('#desktopModal').show();
+        });
+        $('#closeDesktopModal, #desktopCancelBtn').click(function(){
+            $('#desktopModal').hide();
+        });
+        $('#desktopInstallBtn').click(function(){
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    $('#desktopModal').hide();
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('请在浏览器地址栏点击安装图标或使用支持的浏览器');
+                $('#desktopModal').hide();
+            }
+        });
+    });
+    // 意见反馈弹窗逻辑
+    $(function(){
+        $('#feedback-link').click(function(e){
+            e.preventDefault();
+            $('#feedbackModal').show();
+        });
+        $('#closeFeedback').click(function(){
+            $('#feedbackModal').hide();
+        });
+        $(window).click(function(event) {
+            if ($(event.target).is('#feedbackModal')) {
+                $('#feedbackModal').hide();
+            }
+        });
+        $('#submitFeedback').click(function(){
+            var text = $('#feedbackText').val().trim();
+            if(!text){
+                alert('请输入反馈内容');
+                return;
+            }
+            // 这里可接入后端API
+            alert('感谢你的反馈！');
+            $('#feedbackModal').hide();
+            $('#feedbackText').val('');
+        });
+    });
+    $(document).ready(function() {
+        // 模态框控制
+        const loginModal = $('#loginModal');
+        const registerModal = $('#registerModal');
+        const loginBtn = $('.login-btn');
+        const registerBtn = $('.register-btn');
+        const closeBtns = $('.close');
+
+        // 显示登录模态框
+        loginBtn.click(function() {
+            loginModal.show();
+        });
+
+        // 显示注册模态框
+        registerBtn.click(function() {
+            registerModal.show();
+        });
+
+        // 关闭模态框
+        closeBtns.click(function() {
+            loginModal.hide();
+            registerModal.hide();
+        });
+
+        // 点击模态框外部关闭
+        $(window).click(function(event) {
+            if ($(event.target).hasClass('modal')) {
+                $('.modal').hide();
+            }
+        });
+
+        // 登录提交
+        $('#loginSubmit').click(function() {
+            const username = $('#loginUsername').val();
+            const password = $('#loginPassword').val();
+            if (!username || !password) {
+                $('#loginError').text('请填写所有字段').show();
+                return;
+            }
+            $.ajax({
+                url: '/api/login',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    username: username,
+                    password: password
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        alert('登录成功！');
+                        loginModal.hide();
+                        // 登录后显示用户名和头像
+                        $('.nav-buttons').hide();
+                        $('.user-info .username').text(response.username);
+                        $('.user-info .avatar').css('background-image', ''); // 默认无头像
+                        $('.user-info').show();
+                    } else {
+                        $('#loginError').text(response.message).show();
+                    }
+                },
+                error: function() {
+                    $('#loginError').text('登录失败，请稍后重试').show();
+                }
+            });
+        });
+
+        // 注册提交
+        $('#registerSubmit').click(function() {
+            const username = $('#registerUsername').val();
+            const password = $('#registerPassword').val();
+            const activationCode = $('#activationCode').val();
+            
+            if (!username || !password || !activationCode) {
+                $('#registerError').text('请填写所有字段').show();
+                return;
+            }
+
+            $.ajax({
+                url: '/api/register',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    username: username,
+                    password: password,
+                    activationCode: activationCode
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        alert('注册成功！请登录');
+                        registerModal.hide();
+                        loginModal.show();
+                    } else {
+                        $('#registerError').text(response.message).show();
+                    }
+                },
+                error: function() {
+                    $('#registerError').text('注册失败，请稍后重试').show();
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

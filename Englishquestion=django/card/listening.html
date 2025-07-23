@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>真题精听</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', '微软雅黑', Arial, sans-serif;
+            background: #f6f7f9;
+        }
+        .bg {
+            width: 100vw;
+            height: 320px;
+            background: url('/static/img/视听.jpeg') center/cover no-repeat;
+            position: relative;
+        }
+        .nav {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background: rgba(255,255,255,0.05);
+            z-index: 2;
+        }
+        .nav-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .main-title {
+            position: absolute;
+            left: 0; right: 0; top: 120px;
+            text-align: center;
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .content-card {
+            max-width: 1100px;
+            margin: -120px auto 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+            padding: 36px 32px 32px 32px;
+            position: relative;
+            z-index: 10;
+        }
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+        .info-row .btn {
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 7px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 12px;
+            transition: background 0.2s;
+        }
+        .info-row .btn:hover {
+            background: #444;
+        }
+        .info-row .info {
+            color: #444;
+            font-size: 1rem;
+        }
+        .audio-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0 12px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        .audio-row audio {
+            width: 320px;
+        }
+        .audio-row .audio-time {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .audio-row .audio-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #222;
+        }
+        .answer-row {
+            margin: 28px 0 0 0;
+        }
+        .answer-row textarea {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            padding: 12px;
+            resize: vertical;
+            margin-bottom: 18px;
+            font-family: inherit;
+        }
+        .answer-row .btn {
+            margin-right: 16px;
+        }
+        .footer {
+            text-align: center;
+            color: #bbb;
+            font-size: 0.95rem;
+            margin-top: 60px;
+        }
+        @media (max-width: 700px) {
+            .content-card { padding: 16px 4px; }
+            .main-title { font-size: 1.2rem; top: 80px; }
+            .audio-row audio { width: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="nav">
+            <div class="nav-title">小语笔记-英语</div>
+        </div>
+        <div class="main-title">真题听力精听.</div>
+    </div>
+    <div class="content-card">
+        <div class="info-row">
+            <button class="btn">双料精题</button>
+            <span class="info">当前分类：2024年6月四级真题（第一套）</span>
+            <span class="info">当前进度：1-23题（第一句）</span>
+        </div>
+        <div class="audio-row">
+            <button class="audio-btn" title="播放/暂停">▶️</button>
+            <button class="audio-btn" title="循环播放">🔁</button>
+            <audio src="#" controls style="display:none;"></audio>
+            <span class="audio-time">0:00 / 0:09</span>
+            <a href="#" style="margin-left:auto;font-size:0.98rem;color:#3b82f6;text-decoration:none;">查原文</a>
+        </div>
+        <div class="answer-row">
+            <textarea placeholder="输入听到的句子"></textarea>
+            <div>
+                <button class="btn">AI精评</button>
+                <button class="btn" style="background:#fff;color:#222;border:1px solid #ddd;">下一题</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">粤ICP备2024042419号-1</div>
+</body>
+</html>

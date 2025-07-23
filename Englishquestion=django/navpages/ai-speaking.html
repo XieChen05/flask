@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AI口语外教</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', '微软雅黑', Arial, sans-serif;
+            background: #fafbfc;
+        }
+        .speaking-bg {
+            width: 100vw;
+            height: 320px;
+            background: url('/static/img/en.jpg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .speaking-bg::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg,rgba(60,40,80,0.38) 60%,rgba(255,255,255,0.08) 100%);
+        }
+        .speaking-title {
+            position: relative;
+            color: #fff;
+            font-size: 2.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-top: 60px;
+            z-index: 1;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.18);
+        }
+        .speaking-main {
+            max-width: 1400px;
+            margin: -80px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+            padding: 48px 48px 32px 48px;
+            position: relative;
+        }
+        .speaking-desc {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #222;
+        }
+        .speaking-list {
+            margin-bottom: 28px;
+            color: #222;
+            font-size: 1.08rem;
+        }
+        .speaking-list li {
+            margin-bottom: 8px;
+        }
+        .speaking-cards {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .speaking-card {
+            background: #f6fcfc;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 18px 18px 8px 18px;
+            width: 320px;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .speaking-card img {
+            width: 90%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .speaking-card .card-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        .speaking-card .card-desc {
+            color: #666;
+            font-size: 1.02rem;
+            margin-bottom: 8px;
+        }
+        .speaking-dev-tip {
+            margin-top: 32px;
+            color: #e67e22;
+            font-size: 1.15rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        @media (max-width: 900px) {
+            .speaking-main { padding: 18px 4vw 18px 4vw; }
+            .speaking-cards { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="speaking-bg">
+        <div class="speaking-title">AI口语外教</div>
+    </div>
+    <div class="speaking-main">
+        <div class="speaking-desc">AI外教一对一练习口语，祝你轻松开口说英语</div>
+        <ul class="speaking-list">
+            <li><b>AI口语对话：</b> 提供实用口语交流的练习机会，帮助你提升口语表达力。</li>
+            <li><b>AI生成例句：</b> AI动态生成例句，#推例句的智能改良内容，方便模仿练习</li>
+            <li><b>中文支持：</b> 如果不知道如何用英语表达，可以点击不同的中文，AI帮你翻译成英语并生成成文，然后跟读或对话练习发音</li>
+            <li><b>AI语法纠错：</b> 智能纠正你的语法表达，可以从错误中成长，助你新突破。</li>
+            <li><b>AI口语建议：</b> 优化你的英语表达，提供地道的改进建议。</li>
+            <li><b>多种角色选择：</b> 让你可以选择不同的口语角色，进行学习体验。</li>
+        </ul>
+        <div class="speaking-cards">
+            <div class="speaking-card">
+                <img src="/static/img/ai-speaking-demo1.png" alt="AI口语对话">
+                <div class="card-title">AI口语对话<br><span style="color:#e67e22;font-size:0.95rem;">NEW</span></div>
+                <div class="card-desc">扫码开始体验</div>
+                <img src="/static/img/ai-speaking-qr.png" alt="二维码" style="width:120px;margin-top:8px;">
+            </div>
+            <div class="speaking-card">
+                <img src="/static/img/ai-speaking-demo2.png" alt="AI口语界面1">
+            </div>
+            <div class="speaking-card">
+                <img src="/static/img/ai-speaking-demo3.png" alt="AI口语界面2">
+            </div>
+        </div>
+        <div class="speaking-dev-tip">此功能正在开发中，后续会陆续开放</div>
+    </div>
+</body>
+</html>
